@@ -1,0 +1,11 @@
+flask
+flask_cors
+rembg
+pillow
+img2pdf
+pypdf
+flask_sqlalchemy
+flask_login
+werkzeug
+gunicorn
+onnxruntime
