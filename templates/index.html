@@ -3,127 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuraShift - Ultimate Tools</title>
+    <title>Vaibhav AI Tools - Pro Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
-        tailwind.config = { theme: { extend: { colors: { neonPurple: '#7C3AED', neonCyan: '#06B6D4' }, fontFamily: { heading: ['Space Grotesk'], body: ['Inter'] } } } }
+        tailwind.config = { theme: { extend: { colors: { neonPurple: '#7C3AED', neonCyan: '#06B6D4', darkBg: '#050A18' }, fontFamily: { heading: ['Space Grotesk'], body: ['Inter'] } } } }
     </script>
-    <style>body{background:#050A18;color:white;font-family:'Inter'} .glass{background:rgba(255,255,255,0.03);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1)}</style>
+    <style>
+        body{background: #050A18; color:white; font-family:'Inter'; overflow-x: hidden;} 
+        .glass{background:rgba(255,255,255,0.03); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.1); transition: 0.3s;}
+        .glass:hover{transform: translateY(-5px); border-color: #06B6D4; background:rgba(255,255,255,0.05);}
+        /* Advertisement Background */
+        .hero-bg {
+            background: linear-gradient(to bottom, rgba(5,10,24,0.3), #050A18), 
+                        url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    </style>
 </head>
-<body class="min-h-screen">
-    <nav class="flex justify-between p-6 border-b border-white/5">
-        <div class="text-3xl font-bold font-heading cursor-pointer" onclick="location.reload()">Aura<span class="text-neonCyan">Shift</span></div>
-        <div id="authSection"></div>
+<body class="min-h-screen flex flex-col">
+    
+    <nav class="fixed w-full z-50 glass border-b-0 px-6 py-4 flex justify-between items-center bg-black/50">
+        <div class="text-2xl font-bold font-heading">Aura<span class="text-neonCyan">Shift</span></div>
+        <div class="hidden md:flex gap-6 text-sm text-gray-300">
+            <a href="#tools" class="hover:text-neonCyan">Tools</a>
+            <a href="#policy" onclick="openPolicy('terms')" class="hover:text-neonCyan">Terms</a>
+            <a href="#policy" onclick="openPolicy('privacy')" class="hover:text-neonCyan">Privacy</a>
+        </div>
     </nav>
 
-    <header class="text-center mt-12 px-4">
-        <h1 class="text-5xl font-bold font-heading mb-6">All-in-One AI Tools<br><span class="text-neonCyan">Free & Secure</span></h1>
-        <p class="text-gray-400 mb-8">Background Remover • PDF Tools • Image Resizer</p>
+    <header class="hero-bg text-center px-4 pt-20">
+        <h1 class="text-5xl md:text-7xl font-bold font-heading mb-4 drop-shadow-lg">Create. Edit. <span class="text-neonCyan">Transform.</span></h1>
+        <p class="text-gray-200 text-lg mb-8 max-w-2xl drop-shadow-md">The Ultimate Free AI Suite by Vaibhav. Remove backgrounds, edit PDFs, and enhance media instantly.</p>
+        <button onclick="document.getElementById('tools').scrollIntoView({behavior: 'smooth'})" class="bg-neonCyan text-black font-bold py-3 px-10 rounded-full hover:bg-white transition shadow-[0_0_20px_rgba(6,182,212,0.5)]">Start Creating</button>
     </header>
 
-    <section id="tools" class="p-6 py-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        
-        <div class="glass p-6 rounded-2xl cursor-pointer hover:border-neonPurple transition" onclick="openTool('BG Remover', '/api/remove-bg', 'image')">
-            <i class="fa-solid fa-eraser text-neonPurple text-3xl mb-4"></i>
-            <h3 class="text-xl font-bold">BG Remover</h3>
-            <p class="text-sm text-gray-400">Remove background instantly.</p>
-        </div>
+    <section id="tools" class="p-6 py-20 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-bold mb-10 text-center border-b border-white/10 pb-4">Our Premium Tools</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div class="glass p-6 rounded-2xl cursor-pointer" onclick="openTool('BG Remover', '/api/remove-bg', 'image', false)">
+                <i class="fa-solid fa-eraser text-neonPurple text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold">BG Remover</h3>
+                <p class="text-sm text-gray-400 mt-2">Clean background removal.</p>
+            </div>
 
-        <div class="glass p-6 rounded-2xl cursor-pointer hover:border-red-500 transition" onclick="openTool('Image to PDF', '/api/img-to-pdf', 'image')">
-            <i class="fa-solid fa-file-pdf text-red-500 text-3xl mb-4"></i>
-            <h3 class="text-xl font-bold">Image to PDF</h3>
-            <p class="text-sm text-gray-400">Convert Photo to PDF.</p>
-        </div>
+            <div class="glass p-6 rounded-2xl cursor-pointer" onclick="openTool('Image to PDF', '/api/img-to-pdf', 'image', false)">
+                <i class="fa-solid fa-file-pdf text-red-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold">Image to PDF</h3>
+                <p class="text-sm text-gray-400 mt-2">Convert photos to documents.</p>
+            </div>
 
-        <div class="glass p-6 rounded-2xl cursor-pointer hover:border-yellow-500 transition" onclick="openTool('PDF Merger', '/api/merge-pdf', 'pdf-multi')">
-            <i class="fa-solid fa-layer-group text-yellow-500 text-3xl mb-4"></i>
-            <h3 class="text-xl font-bold">PDF Merger</h3>
-            <p class="text-sm text-gray-400">Join multiple PDFs into one.</p>
-        </div>
+            <div class="glass p-6 rounded-2xl cursor-pointer" onclick="openTool('PDF Merger', '/api/merge-pdf', 'pdf-multi', false)">
+                <i class="fa-solid fa-layer-group text-yellow-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold">PDF Merger</h3>
+                <p class="text-sm text-gray-400 mt-2">Combine multiple PDFs.</p>
+            </div>
 
-        <div class="glass p-6 rounded-2xl cursor-pointer hover:border-green-500 transition" onclick="openTool('Image Resizer', '/api/resize-image', 'resize')">
-            <i class="fa-solid fa-compress text-green-500 text-3xl mb-4"></i>
-            <h3 class="text-xl font-bold">Resize in KB</h3>
-            <p class="text-sm text-gray-400">Compress image to fixed size.</p>
-        </div>
+            <div class="glass p-6 rounded-2xl cursor-pointer" onclick="openTool('Resize (KB)', '/api/resize-image', 'resize', true)">
+                <i class="fa-solid fa-compress text-green-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold">Resize Image</h3>
+                <p class="text-sm text-gray-400 mt-2">Reduce size for forms.</p>
+            </div>
 
+            <div class="glass p-6 rounded-2xl cursor-pointer" onclick="openTool('PDF Compressor', '/api/compress-pdf', 'pdf-single', false)">
+                <i class="fa-solid fa-file-zipper text-orange-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold">PDF Compressor</h3>
+                <p class="text-sm text-gray-400 mt-2">Reduce PDF file size.</p>
+            </div>
+
+            <div class="glass p-6 rounded-2xl cursor-pointer" onclick="openTool('Image Enhancer', '/api/enhance-image', 'enhance', true)">
+                <i class="fa-solid fa-wand-magic-sparkles text-blue-400 text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold">Image Enhancer</h3>
+                <p class="text-sm text-gray-400 mt-2">Sharpen & Clarify photos.</p>
+            </div>
+
+            <div class="glass p-6 rounded-2xl cursor-pointer" onclick="openTool('Video to Audio', '/api/video-to-audio', 'video', false)">
+                <i class="fa-solid fa-music text-pink-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold">Video to Audio</h3>
+                <p class="text-sm text-gray-400 mt-2">Extract MP3 from MP4.</p>
+            </div>
+
+            <div class="glass p-6 rounded-2xl cursor-pointer opacity-50">
+                <i class="fa-solid fa-paintbrush text-gray-400 text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold">Magic Editor</h3>
+                <p class="text-sm text-gray-400 mt-2">Coming Soon...</p>
+            </div>
+
+        </div>
     </section>
 
-    <div id="toolOverlay" class="fixed inset-0 bg-black/90 hidden z-50 flex items-center justify-center p-4">
-        <div class="glass w-full max-w-4xl p-8 rounded-3xl relative">
-            <button onclick="document.getElementById('toolOverlay').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400"><i class="fa-solid fa-xmark text-2xl"></i></button>
+    <footer class="mt-auto border-t border-white/5 bg-black/40 py-8 text-center">
+        <p class="text-neonCyan font-bold text-lg mb-2">AuraShift AI</p>
+        <p class="text-gray-500 text-sm mb-4">&copy; 2026 Owned & Operated by Vaibhav. All Rights Reserved.</p>
+        <div class="flex justify-center gap-4 text-xs text-gray-600">
+            <span class="cursor-pointer hover:text-white" onclick="openPolicy('privacy')">Privacy Policy</span>
+            <span>•</span>
+            <span class="cursor-pointer hover:text-white" onclick="openPolicy('terms')">Terms & Conditions</span>
+        </div>
+    </footer>
+
+    <div id="toolOverlay" class="fixed inset-0 bg-black/95 hidden z-50 flex items-center justify-center p-4">
+        <div class="glass w-full max-w-3xl p-8 rounded-3xl relative border border-gray-700 bg-[#0a0f1e]">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
             <h2 id="toolTitle" class="text-3xl font-heading font-bold mb-6 text-neonCyan">Tool Name</h2>
             
             <div class="flex flex-col md:flex-row gap-8">
                 <div class="flex-1">
                     <input type="file" id="fileInput" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-neonPurple file:text-white hover:file:bg-purple-600 cursor-pointer bg-white/5 rounded-lg border border-gray-600 p-2 mb-4">
                     
-                    <div id="resizeOptions" class="hidden mb-4">
-                        <label class="text-gray-400 text-sm">Target Size (KB):</label>
-                        <input type="number" id="kbInput" value="50" class="w-full bg-black/50 border border-gray-600 rounded p-2 text-white mt-1">
+                    <div id="valInputSection" class="hidden mb-4">
+                        <label id="valLabel" class="text-gray-400 text-sm">Value:</label>
+                        <input type="number" id="valInput" value="50" class="w-full bg-black/50 border border-gray-600 rounded p-2 text-white mt-1">
                     </div>
 
-                    <button onclick="processAI()" id="btnText" class="w-full bg-neonCyan text-black font-bold py-3 rounded-xl">Start Processing 🚀</button>
+                    <button onclick="processAI()" id="btnText" class="w-full bg-neonCyan text-black font-bold py-3 rounded-xl hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition">Run Tool 🚀</button>
                 </div>
-                <div id="resultContent" class="flex-1 bg-black/30 rounded-xl p-4 flex items-center justify-center min-h-[250px] text-gray-500">Result appears here</div>
+                <div id="resultContent" class="flex-1 bg-black/30 rounded-xl p-4 flex items-center justify-center min-h-[200px] text-gray-500 text-center border border-dashed border-gray-700">Result appears here</div>
             </div>
         </div>
     </div>
 
+    <div id="policyModal" class="fixed inset-0 bg-black/95 hidden z-50 flex items-center justify-center p-4">
+        <div class="glass w-full max-w-2xl p-8 rounded-2xl relative bg-[#0a0f1e] max-h-[80vh] overflow-y-auto">
+            <button onclick="document.getElementById('policyModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+            <h2 id="policyTitle" class="text-2xl font-bold mb-4 text-white">Policy</h2>
+            <p id="policyText" class="text-gray-400 text-sm leading-relaxed whitespace-pre-wrap"></p>
+        </div>
+    </div>
+
     <script>
-        let isLoggedIn = {{ 'true' if user.is_authenticated else 'false' }};
-        let currentUser = "{{ user.username if user.is_authenticated else '' }}";
-        let isLoginMode = true;
-        let currentEndpoint = '';
-        let currentType = '';
+        let currentEndpoint = '', currentType = '';
 
-        function updateNav() {
-            document.getElementById('authSection').innerHTML = isLoggedIn 
-                ? `<span class="text-neonCyan font-bold mr-4">Hi, ${currentUser}</span><button onclick="window.location.href='/logout'" class="text-red-400 border border-red-400/30 px-4 py-1 rounded-full">Logout</button>`
-                : `<button onclick="document.getElementById('authModal').classList.remove('hidden')" class="bg-white/10 px-6 py-2 rounded-full">Login / Signup</button>`;
-        }
-        updateNav();
-
-        // AUTH LOGIC
-        async function submitAuth() {
-            const u = document.getElementById('username').value, p = document.getElementById('password').value;
-            const res = await fetch(isLoginMode ? '/login' : '/signup', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username: u, password: p}) });
-            const data = await res.json();
-            if(data.success) { isLoginMode ? location.reload() : (alert("Created! Login now."), toggleAuth()); } else { alert(data.message); }
-        }
-        function toggleAuth() { isLoginMode = !isLoginMode; document.getElementById('authTitle').innerText = isLoginMode ? "Login" : "Signup"; }
-
-        // TOOL LOGIC
-        function openTool(name, endpoint, type) {
-            if(!isLoggedIn) return document.getElementById('authModal').classList.remove('hidden');
-            currentEndpoint = endpoint;
-            currentType = type;
-            
+        function openTool(name, endpoint, type, hasInput) {
+            currentEndpoint = endpoint; currentType = type;
             document.getElementById('toolTitle').innerText = name;
             document.getElementById('toolOverlay').classList.remove('hidden');
-            document.getElementById('resultContent').innerHTML = "Result appears here";
-            
+            document.getElementById('resultContent').innerHTML = "Select a file and click Run.";
+            document.getElementById('fileInput').value = "";
+            document.getElementById('btnText').innerText = "Run Tool 🚀";
+
+            const valSec = document.getElementById('valInputSection');
+            const valLbl = document.getElementById('valLabel');
             const fi = document.getElementById('fileInput');
-            fi.value = "";
-            
-            // Logic for Inputs
-            if (type === 'pdf-multi') {
-                fi.setAttribute('multiple', '');
-                fi.accept = ".pdf";
+
+            // Reset Inputs
+            fi.removeAttribute('multiple');
+            if(type === 'pdf-multi') { fi.setAttribute('multiple', ''); fi.accept = ".pdf"; }
+            else if(type === 'pdf-single') { fi.accept = ".pdf"; }
+            else if(type === 'video') { fi.accept = "video/*"; }
+            else { fi.accept = "image/*"; }
+
+            // Handle Numeric Input (Resize / Enhance)
+            if(hasInput) {
+                valSec.classList.remove('hidden');
+                if(type === 'resize') { valLbl.innerText = "Target Size (KB):"; document.getElementById('valInput').value = 50; }
+                if(type === 'enhance') { valLbl.innerText = "Sharpness (1.0 - 5.0):"; document.getElementById('valInput').value = 1.5; }
             } else {
-                fi.removeAttribute('multiple');
-                fi.accept = "image/*";
-            }
-            
-            // Logic for Resize Option
-            if (type === 'resize') {
-                document.getElementById('resizeOptions').classList.remove('hidden');
-            } else {
-                document.getElementById('resizeOptions').classList.add('hidden');
+                valSec.classList.add('hidden');
             }
         }
+
+        function closeModal() { document.getElementById('toolOverlay').classList.add('hidden'); }
 
         async function processAI() {
             const fi = document.getElementById('fileInput');
@@ -132,14 +180,11 @@
             document.getElementById('btnText').innerText = "Processing...";
             const fd = new FormData();
             
-            if (currentType === 'pdf-multi') {
-                for (let i = 0; i < fi.files.length; i++) { fd.append('file', fi.files[i]); }
-            } else {
-                fd.append('file', fi.files[0]);
-            }
+            if (currentType === 'pdf-multi') { for(let f of fi.files) fd.append('file', f); }
+            else { fd.append('file', fi.files[0]); }
 
-            if (currentType === 'resize') {
-                fd.append('kb', document.getElementById('kbInput').value);
+            if (!document.getElementById('valInputSection').classList.contains('hidden')) {
+                fd.append('val', document.getElementById('valInput').value);
             }
 
             try {
@@ -148,32 +193,35 @@
                     const blob = await res.blob();
                     const url = URL.createObjectURL(blob);
                     
-                    let downloadName = "result.png";
-                    if (currentType === 'image') downloadName = "converted.pdf"; 
-                    if (currentType === 'pdf-multi') downloadName = "merged.pdf";
-                    if (currentType === 'resize') downloadName = "resized.jpg";
+                    let dlName = "result";
+                    if(currentType.includes('pdf')) dlName += ".pdf";
+                    else if(currentType === 'video') dlName += ".mp3";
+                    else dlName += ".png";
 
-                    document.getElementById('resultContent').innerHTML = `
-                        <div class="text-center">
-                            <i class="fa-solid fa-circle-check text-green-500 text-5xl mb-4"></i>
-                            <p class="text-white mb-4">Task Completed!</p>
-                            <a href="${url}" download="${downloadName}" class="bg-neonCyan text-black px-6 py-2 rounded-full font-bold">Download File</a>
-                        </div>`;
-                } else { alert("Error from server"); }
-            } catch(e) { alert("Failed"); } 
-            finally { document.getElementById('btnText').innerText = "Start Processing 🚀"; }
+                    let content = `<div class="text-center"><i class="fa-solid fa-check text-green-500 text-4xl mb-3"></i><br><a href="${url}" download="${dlName}" class="bg-neonCyan text-black px-6 py-2 rounded-full font-bold inline-block">Download File</a></div>`;
+                    
+                    // Show preview for images
+                    if(currentType === 'image' || currentType === 'resize' || currentType === 'enhance') {
+                        content = `<div class="text-center"><img src="${url}" class="max-h-40 mx-auto mb-3 rounded border border-gray-600"><br><a href="${url}" download="${dlName}" class="bg-green-500 text-white px-6 py-2 rounded-full font-bold">Download Image</a></div>`;
+                    }
+                    document.getElementById('resultContent').innerHTML = content;
+                } else { alert("Server Error (Maybe file is too big?)"); }
+            } catch(e) { alert("Failed! " + e); } 
+            finally { document.getElementById('btnText').innerText = "Run Tool 🚀"; }
+        }
+
+        function openPolicy(type) {
+            document.getElementById('policyModal').classList.remove('hidden');
+            const title = document.getElementById('policyTitle');
+            const text = document.getElementById('policyText');
+            if(type === 'terms') {
+                title.innerText = "Terms & Conditions";
+                text.innerText = "1. Acceptance: By using AuraShift, you agree to these terms.\n2. Usage: Do not upload illegal content.\n3. Ownership: Tools are provided by Vaibhav.\n4. Liability: We are not responsible for data loss.\n5. Changes: We can update terms anytime.";
+            } else {
+                title.innerText = "Privacy Policy";
+                text.innerText = "1. Data: We process files temporarily. Files are deleted after processing.\n2. Security: We do not share your files with third parties.\n3. Cookies: We use minimal cookies for functionality.\n4. Contact: Reach out to Vaibhav for queries.";
+            }
         }
     </script>
-    
-    <div id="authModal" class="fixed inset-0 bg-black/90 hidden z-50 flex items-center justify-center p-4">
-        <div class="glass w-full max-w-md p-8 rounded-2xl relative">
-            <button onclick="document.getElementById('authModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400"><i class="fa-solid fa-xmark"></i></button>
-            <h2 id="authTitle" class="text-2xl font-bold mb-6 text-center">Login</h2>
-            <input type="text" id="username" placeholder="Username" class="w-full bg-black/50 border border-gray-700 rounded-lg p-3 mb-4 text-white">
-            <input type="password" id="password" placeholder="Password" class="w-full bg-black/50 border border-gray-700 rounded-lg p-3 mb-6 text-white">
-            <button onclick="submitAuth()" class="w-full bg-neonCyan text-black font-bold py-3 rounded-lg">Submit</button>
-            <p class="text-center mt-4 text-gray-400 cursor-pointer" onclick="toggleAuth()">New here? Create Account</p>
-        </div>
-    </div>
 </body>
 </html>

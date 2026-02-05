@@ -4,8 +4,7 @@ rembg
 pillow
 img2pdf
 pypdf
-flask_sqlalchemy
-flask_login
-werkzeug
+moviepy
 gunicorn
+werkzeug
 onnxruntime
