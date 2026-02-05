@@ -4,7 +4,6 @@ rembg
 pillow
 img2pdf
 pypdf
-moviepy
 gunicorn
 werkzeug
 onnxruntime

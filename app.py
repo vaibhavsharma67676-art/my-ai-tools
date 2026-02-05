@@ -2,12 +2,10 @@ import os
 from flask import Flask, render_template, request, jsonify, send_file
 from flask_cors import CORS
 from rembg import remove
-from PIL import Image, ImageEnhance, ImageFilter
+from PIL import Image, ImageEnhance
 import io
 import img2pdf
 from pypdf import PdfWriter, PdfReader
-from moviepy.editor import VideoFileClip
-import tempfile
 
 app = Flask(__name__)
 CORS(app)
@@ -79,7 +77,7 @@ def resize_image():
         return send_file(img_io, mimetype='image/jpeg', download_name='resized.jpg')
     except Exception as e: return jsonify({"error": str(e)}), 500
 
-# --- TOOL 5: PDF COMPRESSOR (New) ---
+# --- TOOL 5: PDF COMPRESSOR ---
 @app.route('/api/compress-pdf', methods=['POST'])
 def compress_pdf():
     file = request.files.get('file')
@@ -90,50 +88,30 @@ def compress_pdf():
         for page in reader.pages:
             writer.add_page(page)
         for page in writer.pages:
-            page.compress_content_streams() # Basic Compression
+            page.compress_content_streams()
         pdf_io = io.BytesIO()
         writer.write(pdf_io)
         pdf_io.seek(0)
         return send_file(pdf_io, mimetype='application/pdf', download_name='compressed.pdf')
     except Exception as e: return jsonify({"error": str(e)}), 500
 
-# --- TOOL 6: IMAGE ENHANCER (New) ---
+# --- TOOL 6: IMAGE ENHANCER ---
 @app.route('/api/enhance-image', methods=['POST'])
 def enhance_image():
     file = request.files.get('file')
-    factor = float(request.form.get('val', 1.5)) # 1.0 is original, 2.0 is double sharp
+    factor = float(request.form.get('val', 1.5))
     if not file: return jsonify({"error": "No file"}), 400
     try:
         img = Image.open(file.stream)
-        # Sharpness
         enhancer = ImageEnhance.Sharpness(img)
         img = enhancer.enhance(factor)
-        # Contrast
         enhancer_con = ImageEnhance.Contrast(img)
-        img = enhancer_con.enhance(1.2) # Thoda Contrast bhi badhao
+        img = enhancer_con.enhance(1.2)
         
         img_io = io.BytesIO()
         img.save(img_io, 'PNG')
         img_io.seek(0)
         return send_file(img_io, mimetype='image/png')
-    except Exception as e: return jsonify({"error": str(e)}), 500
-
-# --- TOOL 7: VIDEO TO AUDIO (New) ---
-@app.route('/api/video-to-audio', methods=['POST'])
-def video_to_audio():
-    file = request.files.get('file')
-    if not file: return jsonify({"error": "No file"}), 400
-    try:
-        # Temp file banana padega kyunki MoviePy direct stream nahi leta
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as temp_video:
-            file.save(temp_video.name)
-            clip = VideoFileClip(temp_video.name)
-            
-            audio_path = temp_video.name + ".mp3"
-            clip.audio.write_audiofile(audio_path, verbose=False, logger=None)
-            clip.close()
-            
-            return send_file(audio_path, as_attachment=True, download_name='extracted_audio.mp3')
     except Exception as e: return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':

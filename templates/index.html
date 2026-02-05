@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vaibhav AI Tools - Pro Suite</title>
+    <meta name="description" content="Use Vaibhav AI Tools for free. Remove background, resize images in KB, convert Image to PDF, and merge PDFs online. No login required.">
+    <meta name="keywords" content="Vaibhav AI, AI Tools, Remove Background, Image to PDF, PDF Merger, Resize Image KB">
+    <meta name="author" content="Vaibhav">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,7 +18,6 @@
         body{background: #050A18; color:white; font-family:'Inter'; overflow-x: hidden;} 
         .glass{background:rgba(255,255,255,0.03); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.1); transition: 0.3s;}
         .glass:hover{transform: translateY(-5px); border-color: #06B6D4; background:rgba(255,255,255,0.05);}
-        /* Advertisement Background */
         .hero-bg {
             background: linear-gradient(to bottom, rgba(5,10,24,0.3), #050A18), 
                         url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');
@@ -85,12 +88,6 @@
                 <p class="text-sm text-gray-400 mt-2">Sharpen & Clarify photos.</p>
             </div>
 
-            <div class="glass p-6 rounded-2xl cursor-pointer" onclick="openTool('Video to Audio', '/api/video-to-audio', 'video', false)">
-                <i class="fa-solid fa-music text-pink-500 text-4xl mb-4"></i>
-                <h3 class="text-xl font-bold">Video to Audio</h3>
-                <p class="text-sm text-gray-400 mt-2">Extract MP3 from MP4.</p>
-            </div>
-
             <div class="glass p-6 rounded-2xl cursor-pointer opacity-50">
                 <i class="fa-solid fa-paintbrush text-gray-400 text-4xl mb-4"></i>
                 <h3 class="text-xl font-bold">Magic Editor</h3>
@@ -158,10 +155,8 @@
             fi.removeAttribute('multiple');
             if(type === 'pdf-multi') { fi.setAttribute('multiple', ''); fi.accept = ".pdf"; }
             else if(type === 'pdf-single') { fi.accept = ".pdf"; }
-            else if(type === 'video') { fi.accept = "video/*"; }
             else { fi.accept = "image/*"; }
 
-            // Handle Numeric Input (Resize / Enhance)
             if(hasInput) {
                 valSec.classList.remove('hidden');
                 if(type === 'resize') { valLbl.innerText = "Target Size (KB):"; document.getElementById('valInput').value = 50; }
@@ -195,17 +190,15 @@
                     
                     let dlName = "result";
                     if(currentType.includes('pdf')) dlName += ".pdf";
-                    else if(currentType === 'video') dlName += ".mp3";
                     else dlName += ".png";
 
                     let content = `<div class="text-center"><i class="fa-solid fa-check text-green-500 text-4xl mb-3"></i><br><a href="${url}" download="${dlName}" class="bg-neonCyan text-black px-6 py-2 rounded-full font-bold inline-block">Download File</a></div>`;
                     
-                    // Show preview for images
                     if(currentType === 'image' || currentType === 'resize' || currentType === 'enhance') {
                         content = `<div class="text-center"><img src="${url}" class="max-h-40 mx-auto mb-3 rounded border border-gray-600"><br><a href="${url}" download="${dlName}" class="bg-green-500 text-white px-6 py-2 rounded-full font-bold">Download Image</a></div>`;
                     }
                     document.getElementById('resultContent').innerHTML = content;
-                } else { alert("Server Error (Maybe file is too big?)"); }
+                } else { alert("Server Error (Check File Size)"); }
             } catch(e) { alert("Failed! " + e); } 
             finally { document.getElementById('btnText').innerText = "Run Tool 🚀"; }
         }
